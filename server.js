@@ -15,7 +15,7 @@ connectDB();
 app.use(cors());
 app.use(bodyParser.json(
   {
-    origin: ["https://entertainment-app-beta.vercel.app/"],
+        origin: ["https://spontaneous-sable-46ffac.netlify.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
