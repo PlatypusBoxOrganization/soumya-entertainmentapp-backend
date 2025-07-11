@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config');
 const authRoutes = require('./routes/auth');
-
 require('dotenv').config();
 
 const app = express();
@@ -11,24 +10,34 @@ const app = express();
 // ✅ Connect to MongoDB
 connectDB();
 
-// ✅ Proper CORS configuration
+// ✅ Proper CORS config
+const allowedOrigins = [
+    'https://spontaneous-sable-46ffac.netlify.app',
+    'http://localhost:3000'
+];
+
 app.use(cors({
-    origin: 'https://spontaneous-sable-46ffac.netlify.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 
-// ✅ Handle preflight requests (important for CORS)
-app.options('*', cors());
+app.options('*', cors()); // for preflight requests
 
-// ✅ Middleware to parse JSON
+// ✅ JSON parser middleware
 app.use(bodyParser.json());
 
-// ✅ Your routes
+// ✅ Routes
 app.use('/api/auth', authRoutes);
 
-// ✅ Start the server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
 });
