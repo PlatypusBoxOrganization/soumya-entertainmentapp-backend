@@ -1,21 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // ✅ REQUIRED
+require('dotenv').config();
+
 const connectDB = require('./config');
 const authRoutes = require('./routes/auth');
-require('dotenv').config();
 
 const app = express();
 
 // ✅ Connect to MongoDB
 connectDB();
 
-// ✅ Proper CORS config
+// ✅ CORS config
 const allowedOrigins = [
     'https://spontaneous-sable-46ffac.netlify.app',
     'http://localhost:3000',
-    'http://localhost:5173',  // Vite dev server
-    'http://127.0.0.1:5173'   // Alternative localhost
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
 ];
 
 app.use(cors({
@@ -30,15 +32,13 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 
-app.options('*', cors()); // for preflight requests
-
-// ✅ JSON parser middleware
+app.options('*', cors());
 app.use(bodyParser.json());
 
-// ✅ Routes
+// ✅ API routes
 app.use('/api/auth', authRoutes);
 
-
+// ✅ Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-// ✅ Start server
+// ✅ PORT for Render
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
