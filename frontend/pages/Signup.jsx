@@ -8,7 +8,9 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
-  const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [name, setName] = useState("");
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -17,7 +19,9 @@ function Signup() {
       return;
     }
     try {
-      await authAPI.register({ email, password });
+        //await authAPI.register({ email, password });
+        await authAPI.register({ name, email, password });
+
       setMessage("Registered successfully! Redirecting...");
       setTimeout(() => {
         navigate("/login"); // Redirect to login after successful registration
@@ -61,7 +65,23 @@ function Signup() {
               placeholder="Enter your email"
               required
             />
-          </div>
+                  </div>
+
+                  <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-2">
+                          Full Name
+                      </label>
+                      <input
+                          type="text"
+                          id="name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className="w-full px-4 py-3 rounded-lg bg-zinc-700 border border-zinc-600 text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200"
+                          placeholder="Enter your full name"
+                          required
+                      />
+                  </div>
+
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-zinc-400 mb-2">
@@ -97,7 +117,8 @@ function Signup() {
             <button
               type="submit"
               className="w-full px-6 py-3 rounded-lg bg-indigo-500 text-white font-medium hover:bg-indigo-600 active:bg-indigo-700 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg active:shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-indigo-500"
-              disabled={!email || !password || !rpassword || password !== rpassword}
+              disabled={!name || !email || !password || !rpassword || password !== rpassword}
+
             >
               Sign up
             </button>
