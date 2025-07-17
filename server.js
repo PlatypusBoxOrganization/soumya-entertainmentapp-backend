@@ -39,13 +39,13 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
 
 // ✅ Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+//if (process.env.NODE_ENV === 'production') {
+//    app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-    });
-}
+//    app.get('*', (req, res) => {
+//        res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+//    });
+//}
 
 // ✅ PORT for Render
 const PORT = process.env.PORT || 5000;
