@@ -3,22 +3,26 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
+    plugins: [tailwindcss()],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src')
+        }
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+                ws: true,
+            }
+        }
+    },
+    optimizeDeps: {
+        exclude: ['framer-motion', 'react-hot-toast']
+    },
+    ssr: {
+        noExternal: ['framer-motion', 'react-hot-toast']
     }
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      }
-    }
-  }
 })
