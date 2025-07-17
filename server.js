@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config');
@@ -13,7 +13,9 @@ connectDB();
 // ✅ Proper CORS config
 const allowedOrigins = [
     'https://spontaneous-sable-46ffac.netlify.app',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://localhost:5173',  // Vite dev server
+    'http://127.0.0.1:5173'   // Alternative localhost
 ];
 
 app.use(cors({

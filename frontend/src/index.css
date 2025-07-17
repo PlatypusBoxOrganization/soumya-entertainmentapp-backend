@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Set Urbanist as global font */
+:root {
+  font-family: 'Urbanist', sans-serif;
+}
