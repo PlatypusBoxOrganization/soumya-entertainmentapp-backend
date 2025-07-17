@@ -9,6 +9,7 @@
     "server": "nodemon server.js",
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "prod": "concurrently \"npm run server\" \"cd frontend\" \"npm install\" \"cd..\" \"npm run client\"",
     "install-client": "cd frontend && npm install",
     "install-all": "npm install && npm run install-client",
     "build": "cd frontend && npm run build"
